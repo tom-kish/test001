@@ -1,4 +1,7 @@
-package kishinoTest;
+package jp.co.toppan;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 import software.amazon.awssdk.core.ResponseBytes;
 import software.amazon.awssdk.regions.Region;
@@ -59,6 +62,13 @@ public class Main {
 				String fileName = "18";
 				String naiyo = "アクセス設定確認４";
 
+
+
+				byte[] a = Base64.getEncoder().encode("ほげほげ".getBytes(StandardCharsets.UTF_8));
+
+				String en1 = new String(a, StandardCharsets.UTF_8);
+				System.out.println(en1);
+
 				S3Client s3Client = S3Client.builder().region(Region.AP_NORTHEAST_1).build();
 
 				ResponseBytes<GetObjectResponse> res = s3Client.getObjectAsBytes(GetObjectRequest.builder()
@@ -67,9 +77,10 @@ public class Main {
 						.build());
 
 				System.out.println(res.asUtf8String());
+				System.out.println(Base64.getEncoder().encode(res.asUtf8String().getBytes(StandardCharsets.UTF_8)));
+				System.out.println(new String(Base64.getEncoder().encode(res.asUtf8String().getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8));
 
-
-				System.out.println(res.asByteArray());
+				System.out.println(new String(Base64.getEncoder().encode(res.asByteArray()), StandardCharsets.UTF_8));
 
 
 //				s3Client.putObject(PutObjectRequest.builder()
